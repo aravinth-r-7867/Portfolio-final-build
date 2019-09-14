@@ -1,0 +1,21 @@
+@import "remainder";
+
+a{
+    .jumbotron{
+        color:#000;
+        &:hover{
+            box-shadow: $z-depth-1;
+        }
+    }
+}
+
+.works-container{
+    min-height: 100vh;
+    background-color: orangered;
+    display: flex;
+    align-items: center;
+    @media screen and (max-width:426px) {
+        padding: 20px 0;
+        justify-content: center;
+    }
+}

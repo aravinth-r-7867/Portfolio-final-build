@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Aravinth Ramesh</title>
+    <meta name="description" content="Web developer, traveller and photographer">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {{content-for "head"}}
+
+    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/vendor.css">
+    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/portfolio-final-checkin.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap" rel="stylesheet">
+    <link rel="preload" href="/assets/images/kanyakumari-wave.JPG" as="image">
+    <link rel="preload" href="/assets/images/marina-boat.JPG" as="image">
+    <link rel="preload" href="/assets/images/Aluva-aquaduct-bridge.jpg" as="image">
+    <link rel="preload" href="/assets/images/kanyakumari-horse.JPG" as="image">
+    <link rel="shortcut icon" type="image/png" href="/assets/favicon.png"/>
+
+    {{content-for "head-footer"}}
+  </head>
+  <body>
+    {{content-for "body"}}
+
+    <script src="{{rootURL}}assets/vendor.js"></script>
+    <script src="{{rootURL}}assets/portfolio-final-checkin.js"></script>
+
+    {{content-for "body-footer"}}
+  </body>
+</html>

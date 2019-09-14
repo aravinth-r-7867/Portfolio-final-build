@@ -1,0 +1,29 @@
+%card-wrapper{
+    display: flex;
+    flex-flow: row wrap;
+    background-color: #fff;
+    box-shadow: 0 16px 28px 0 rgba(0,0,0,.22),0 25px 55px 0 rgba(0,0,0,.21) !important;
+    .display-4{
+        font-size: 20px;
+    }
+}
+
+$z-depth-1 : 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12) !important;
+
+.poppins-font{
+    font-family: 'Poppins';
+}
+
+*{
+    box-sizing: border-box;
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+// @mixin media-query-function($property, $value) {
+//     @media screen and (max-width:426px) {
+//         #{$property} : #{$value};
+//     }
+// }
