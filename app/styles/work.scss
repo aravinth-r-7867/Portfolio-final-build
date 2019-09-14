@@ -1,4 +1,5 @@
 @import "remainder";
+@import "sticks";
 
 a{
     .jumbotron{
@@ -15,7 +16,7 @@ a{
     display: flex;
     align-items: center;
     @media screen and (max-width:426px) {
-        padding: 20px 0;
+        padding: 0;
         justify-content: center;
     }
 }

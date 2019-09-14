@@ -21,6 +21,8 @@ import { htmlSafe } from '@ember/string';
 * @gameStatus array that contains last five game plays as an input to game status message
 * @progressBarPrev to save previous progress bar html, points and classnames on odd move counts
 * @gameEnd to show end game message
+* @isMobile to if it is a mobile
+* @toggleHelpCardMobile toggle switch for mobile
 */
 
 /**
@@ -53,6 +55,12 @@ export default Component.extend({
     randomize: service(),
     init() {
         this._super(...arguments);
+        var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+        if(width < 500){
+            this.set('isMobile', true);
+        } else {
+            this.set('isMobile', false);
+        }
         if (parseInt(localStorage.getItem('gamePoints')) == 50) {
             localStorage.removeItem('cardArray');
             localStorage.removeItem('matchedArray');
@@ -100,6 +108,7 @@ export default Component.extend({
         this.set('firstElem', '');
         this.set('secondValue', false);
         this.set('secondElem', '');
+        this.set('toggleHelpCardMobile', false);
 
         this.set('gameStatus', []);
         this.set('progressBarPrev', {});
@@ -172,7 +181,7 @@ export default Component.extend({
     },
     actions: {
         cardOpen: function (value, event) {
-            if ((this.gameTurnStatus == 1 || this.gameTurnStatus == 0) && this.matchedArray.includes(value) == false) {
+            if ((this.gameTurnStatus == 1 || this.gameTurnStatus == 0) && this.matchedArray.includes(value) == false && this.firstElem != event.target) {
 
                 var innerScope = this;
                 this.set('movesCount', this.movesCount + 1);
@@ -229,6 +238,9 @@ export default Component.extend({
                     }
                 }
             }
+        },
+        mobileHelpCardFun : function(){
+            this.toggleProperty('toggleHelpCardMobile');
         }
     }
 });
