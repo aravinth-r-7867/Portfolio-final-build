@@ -105,7 +105,7 @@ export default Component.extend({
             },
 
             {
-            "first" : { "url" : "Rameshwaram-Pamban-bridge.jpg", "imageIndex" : 7},
+            "first" : { "url" : "Rameshwaram-Pamban-bridge.JPG", "imageIndex" : 7},
             "second" : { "url": "kaveri-water.JPG", "imageIndex" : 8},
             "third" : { "url" : "manali-buddha-temple.jpg", "imageIndex" : 9},
             "fourth" : { "url" : "Alleppey-boat.JPG", "imageIndex" : 10},
