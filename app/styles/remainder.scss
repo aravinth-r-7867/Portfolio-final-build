@@ -115,7 +115,7 @@ $helpcard-shadow : 0px -10px 38px 3px rgba(0,0,0,0.14), 0 9px 46px 8px rgba(0,0,
     }
   }
 
-  &.hide {
+  &.remainder-card-hide {
     animation: card-hide .25s linear;
     transform: scale(0, 0);
     pointer-events: none;

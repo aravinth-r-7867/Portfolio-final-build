@@ -27,3 +27,31 @@ a:hover{
 //         #{$property} : #{$value};
 //     }
 // }
+
+@mixin min-max-res($min, $max, $percentage){
+    @if $max < $min{
+      @error 'Max value cannot be smaller than Min value';
+    }
+    @else{
+      width : $percentage !important;
+      max-width: $max !important;
+      min-width: $min !important;
+    }
+  }
+  
+  $breakpoints: (
+    xs: 426px,
+    md: 1072px,
+    lg: 1368px
+  );
+  
+  @mixin mq-fun($breakpoint){
+    $breakpoint-value: map-get($breakpoints, $breakpoint);
+    @media (max-width: $breakpoint-value) {
+      @content;
+    }
+  }
+
+  .hide{
+    display: none !important;
+  }

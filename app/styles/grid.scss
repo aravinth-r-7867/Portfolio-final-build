@@ -1,39 +1,40 @@
 .container-fluid{
     padding: 0 8%;
-    img{
+    z-index: 3;
+    @include mq-fun(xs){
+        padding: 0 15px;
+    }
+    .image-wrapper{
+      img{
         width:100%;
         min-height: 250px;
         box-shadow : 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
     }
-    @media screen and (max-width:426px) {
-        padding: 0 15px;
-    }
-    .image-wrapper{
         margin: 10px 0;
         position: relative;
         cursor: pointer;
         user-select: none;
         &:before{
-            content:"";
-            width : 100%;
-            height : 40px;
-            bottom: 0;
-            position: absolute;
-            transition: .1s background ease-in;
-        }
-        &:after{
-            content:"Click to see full image";
-            position : absolute;
-            opacity : 0;
-            width: 60%;
-            height:30px;
-            line-height: 30px;
-            text-align: center;
-            left:20%;
-            bottom:5px;
-            font-size: 16px;
-            font-family: 'Fira sans';
-        }
+          content:"";
+          width : 100%;
+          height : 40px;
+          bottom: 0;
+          position: absolute;
+          transition: .1s background ease-in;
+      }
+      &:after{
+          content:"Click to see all images";
+          position : absolute;
+          opacity : 0;
+          width: 60%;
+          height:30px;
+          line-height: 30px;
+          text-align: center;
+          left:20%;
+          bottom:5px;
+          font-size: 16px;
+          font-family: 'Fira sans';
+      }
         &:hover{
             &:before{
                 background-color : rgb(255, 255, 255, 0.85);
@@ -59,7 +60,7 @@
 }
 
 .image-gallery-grid{
-    margin-top: -100px;
+    margin-top: -30vh;
     background-color: dimgray;
     .img-fluid{
         transition: all .25s ease-in-out;
@@ -98,7 +99,6 @@
 }
 .modalBackdrop{
     position: fixed;
-    transition: .25s background ease-in;
     width: 100%;
     height:100vh;
     z-index: 10;
@@ -109,12 +109,58 @@
     background-position: center center;
     background-size: contain;
     background-repeat: no-repeat;
-    span{
-        position: fixed;
-        top:25px;
-        right:25px;
-        color: #fff;
-        font-size:22px;
-        cursor: pointer;
+    animation: show-animation .25s ease-in;
+    transition: .1s background-image ease-in;
+    .mbd--img-wrapper{
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background-size: contain;
+      background-repeat:  no-repeat;
+      background-position: center center;
     }
-}
+    .swiper-container, .swiper-wrapper{
+      height: 100%;
+    }
+  }
+
+  
+
+
+.CSS-caret-icon__close{
+    position : relative;
+    width : 25px;
+    height : 50px;
+    cursor:pointer;
+    transition : .1s transform ease-in;
+    &::after, &::before{
+      content : "";
+      position : absolute;
+      width : 25px;
+      height : 5px;
+      border-radius: 6px;
+      background-color : #fff;
+      left:0;
+    }
+  }
+
+  .CSS-caret-icon__close{
+    &::after{
+      transform : rotate(45deg);
+    }
+    &::before{
+      transform : rotate(135deg);
+    }
+  }
+  
+  .CSS-caret-icon__close{
+    position: fixed;
+    top:15%;
+    right:25px;
+    z-index: 13;
+  }
+  .swiper-button-next, .swiper-button-prev{
+    @include mq-fun(xs){
+      display: none;
+    }
+  }

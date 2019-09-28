@@ -50,6 +50,7 @@ img {
     align-items: center;
     justify-content: center;
     flex-grow: 1;
+    pointer-events: none;
 
     .display-4 {
       font-family: "Lato";
@@ -80,7 +81,7 @@ img {
     }
   }
 
-  @media screen and (max-width:426px) {
+  @include mq-fun(xs){
     position: static;
     padding:0;
     margin-bottom: 0;

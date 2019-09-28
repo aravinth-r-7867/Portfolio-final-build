@@ -1,32 +1,39 @@
 <div class="row">
     {{#each imageList as |imageName index| }}
-    <div class="col-sm-4 col-12 grid-col">
-        <div onclick={{action "openModal" imageName.first}} class="image-wrapper">
-             <img class="img-fluid border" src="/assets/images/{{imageName.first}}">
+        <div class="col-sm-4 col-12 grid-col">
+            <div onclick={{action "openModal" imageName.first.imageIndex}} class="image-wrapper">
+                <img class="img-fluid border" src="/assets/images/{{imageName.first.url}}">
+            </div>
+            <div onclick={{action "openModal" imageName.second.imageIndex}} class="image-wrapper">
+                <img class="img-fluid border" src="/assets/images/{{imageName.second.url}}">
+            </div>
+            <div onclick={{action "openModal" imageName.third.imageIndex}} class="image-wrapper">
+                <img class="img-fluid border" src="/assets/images/{{imageName.third.url}}">
+            </div>
+            <div onclick={{action "openModal" imageName.fourth.imageIndex}} class="image-wrapper">
+                <img class="img-fluid border" src="/assets/images/{{imageName.fourth.url}}">
+            </div>
+            <div onclick={{action "openModal" imageName.fifth.imageIndex}} class="image-wrapper">
+                <img class="img-fluid border" src="/assets/images/{{imageName.fifth.url}}">
+            </div>
+            <div onclick={{action "openModal" imageName.sixth.imageIndex}} class="image-wrapper">
+                <img class="img-fluid border" src="/assets/images/{{imageName.sixth.url}}">
+            </div>
+            <div onclick={{action "openModal" imageName.seventh.imageIndex}} class="image-wrapper">
+                <img class="img-fluid border" src="/assets/images/{{imageName.seventh.url}}">
+            </div>
         </div>
-        <div onclick={{action "openModal" imageName.second}} class="image-wrapper">
-            <img class="img-fluid border" src="/assets/images/{{imageName.second}}">
-        </div>
-        <div onclick={{action "openModal" imageName.third}} class="image-wrapper">
-            <img class="img-fluid border" src="/assets/images/{{imageName.third}}">
-        </div>
-        <div onclick={{action "openModal" imageName.fourth}} class="image-wrapper">
-            <img class="img-fluid border" src="/assets/images/{{imageName.fourth}}">
-        </div>
-        <div onclick={{action "openModal" imageName.fifth}} class="image-wrapper">
-            <img class="img-fluid border" src="/assets/images/{{imageName.fifth}}">
-        </div>
-        <div onclick={{action "openModal" imageName.sixth}} class="image-wrapper">
-            <img class="img-fluid border" src="/assets/images/{{imageName.sixth}}">
-        </div>
-        <div onclick={{action "openModal" imageName.seventh}} class="image-wrapper">
-            <img class="img-fluid border" src="/assets/images/{{imageName.seventh}}">
-        </div>
-    </div>
     {{/each}}
 </div>
 {{#if isModalOpen}}
-    <div class="modalBackdrop" id="modalImageContainer">
-        <span onclick={{action "closeModal"}}>Close</span>
-    </div>
+<div class="modalBackdrop" id="modalImageContainer">
+    {{#swiper-container options=myOptions}}
+        {{#each imageAll as |imgItem|}}
+            {{#swiper-slide}}
+                <div class="mbd--img-wrapper" style="background-image: url(/assets/images/{{imgItem.imageUrl}})"></div>
+            {{/swiper-slide}}
+        {{/each}}
+    {{/swiper-container}}
+     <div onclick={{action "openModal"}} class="CSS-caret-icon__close"></div>
+</div>
 {{/if}}
