@@ -12,29 +12,29 @@ export default Component.extend({
             "first" : "marina-boat.JPG",
             "second" : "marina-sun-2.JPG ",
             "third" : "Arikkal-falls.JPG",
-            "fourth" : "Athirapally-falls.JPG",
+            "fourth" : "Athirapally-falls.jpg",
             "fifth" : "couples-in-marina.JPG",
-            "sixth" : "trichy-uchi-pillayar-kovil.JPG",
-            "seventh" : "srirangam-temple.JPG"
+            "sixth" : "trichy-uchi-pillayar-kovil.jpg",
+            "seventh" : "srirangam-temple.jpg"
             },
 
             {
             "first" : "Rameshwaram-Pamban-bridge.JPG", 
             "second" : "kaveri-water.JPG",
-            "third" : "manali-buddha-temple.JPG",
+            "third" : "manali-buddha-temple.jpg",
             "fourth" : "Alleppey-boat.JPG",
-            "fifth" : "manali-stream.JPG",
+            "fifth" : "manali-stream.jpg",
             "sixth" : "manali-sun.JPG",
             "seventh" : "manali-tree.JPG"
             },
 
             {
             "first" : "kanyakumari-horse.JPG",
-            "second" : "Aluva-aquaduct-bridge.JPG ",
+            "second" : "Aluva-aquaduct-bridge.jpg ",
             "third" : "kanyakumari-boat.JPG",
             "fourth" : "srirangam-sculpture.JPG",
             "fifth" : "kanyakumari-sea-roaring.JPG",
-            "sixth" : "pitchavaram-sun.JPG",
+            "sixth" : "pitchavaram-sun.jpg",
             "seventh" : "marina-sun-1.JPG"
             }
 
