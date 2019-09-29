@@ -36,61 +36,62 @@ export default Component.extend({
                 "imageIndex" : 6
             },
             {
-                "imageUrl" : "kanyakumari-horse.JPG",
+                "imageUrl" : "Rameshwaram-Pamban-bridge.jpg",
                 "imageIndex" : 7
             },
             {
-                "imageUrl" : "Aluva-aquaduct-bridge.jpg",
+                "imageUrl" : "kaveri-water.JPG",
                 "imageIndex" : 8
             },
             {
-                "imageUrl" : "pitchavaram-sun.jpg",
+                "imageUrl" : "manali-buddha-temple.jpg",
                 "imageIndex" : 9
             },
             {
-                "imageUrl" : "srirangam-sculpture.JPG",
+                "imageUrl" : "Alleppey-boat.JPG",
                 "imageIndex" : 10
             },
             {
-                "imageUrl" : "kanyakumari-sea-roaring.JPG",
+                "imageUrl" : "manali-stream.jpg",
                 "imageIndex" : 11
             },
             {
-                "imageUrl" : "kanyakumari-boat.JPG",
+                "imageUrl" : "manali-sun.JPG",
                 "imageIndex" : 12
             },
             {
-                "imageUrl" : "marina-sun-1.JPG",
+                "imageUrl" : "manali-tree.JPG",
                 "imageIndex" : 13
             },
             {
-                "imageUrl" : "Rameshwaram-Pamban-bridge.jpg",
+                "imageUrl" : "kanyakumari-horse.JPG",
                 "imageIndex" : 14
             },
             {
-                "imageUrl" : "kaveri-water.JPG",
+                "imageUrl" : "Aluva-aquaduct-bridge.jpg",
                 "imageIndex" : 15
             },
             {
-                "imageUrl" : "manali-buddha-temple.jpg",
+                "imageUrl" : "pitchavaram-sun.jpg",
                 "imageIndex" : 16
             },
             {
-                "imageUrl" : "Alleppey-boat.JPG",
+                "imageUrl" : "srirangam-sculpture.JPG",
                 "imageIndex" : 17
             },
             {
-                "imageUrl" : "manali-stream.jpg",
+                "imageUrl" : "kanyakumari-sea-roaring.JPG",
                 "imageIndex" : 18
             },
             {
-                "imageUrl" : "manali-sun.JPG",
+                "imageUrl" : "kanyakumari-boat.JPG",
                 "imageIndex" : 19
             },
             {
-                "imageUrl" : "manali-tree.JPG",
+                "imageUrl" : "marina-sun-1.JPG",
                 "imageIndex" : 20
             },
+            
         ])
         this.set('imageList',[
 
@@ -136,22 +137,19 @@ export default Component.extend({
     didInsertElement(){
        
     },
-    myOptions: { 
+    myOptions:  { 
         followFinger: false,
-        //effect: 'fade',
         loop : true,
         speed : 250,
-        // pagination: {
-        //     el: '.swiper-pagination',
-        //     type: 'fraction',
-        // },
+        initialSlide : 0,
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
         },
     },
     actions:{
-        openModal: function(){
+        openModal: function(index){
+            this.myOptions.initialSlide = index;
             this.toggleProperty('isModalOpen');
         }
     }
