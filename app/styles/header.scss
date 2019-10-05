@@ -68,9 +68,15 @@ img {
         margin-left: 10px;
         transition: .25s background, color, border ease-in;
         cursor: pointer;
-        &[active], &:hover{
+        &[active]{
           background-color: #fff;
           color: #000;
+        }
+        @media screen and (min-width: 600px){
+          &:hover{
+            background-color: #fff;
+            color: #000;
+          }
         }
       }
     }
