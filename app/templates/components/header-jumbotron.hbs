@@ -1,7 +1,7 @@
-<div class="container">
+<div class="container" id="scrollHere">
 
     {{!--Nav bar--}}
-    <nav class="navbar navbar-expand-lg">
+    {{!-- <nav class="navbar navbar-expand-lg">
         <button onclick={{action "showNavToggle"}} class="navbar-toggler {{if showNavBarMob 'clicked'}}" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon nti__first"></span>
@@ -22,13 +22,25 @@
                 </li>
             </ul>
         </div>
-    </nav>
+    </nav> --}}
     {{!--Nav bar--}}
 
     <div class="header-content">
         <h1 class="display-4">Aravinth Ramesh</h1>
-        <p class="lead">Web developer, photographer and travel enthusiast.</p>
+        <div class="lead-wrapper">
+            <div class="lead" active={{leadCountOne}} onclick={{action 'leadClick' 'leadCountOne'}}>Front-end developer</div>
+            <div class="lead" active={{leadCountTwo}} onclick={{action 'leadClick' 'leadCountTwo'}}>Photographer by passion</div>
+            <div class="lead" active={{leadCountThree}} onclick={{action 'leadClick' 'leadCountThree'}}>Travel enthusiast</div>
+        </div>
+        <div class="lead-sub-header">
+            {{#if leadCountOne }}
+            Any doubts? I made this website from scratch
+            {{else if leadCountTwo}}
+            I own a Canon EOS 1500d and I take awesome photos
+            {{else if leadCountThree}}
+            I travel a lot and love to write about them
+            {{/if}}
+        </div>
     </div>
-    <div class="header-backdrop"></div>
     
 </div>

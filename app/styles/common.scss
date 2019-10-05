@@ -1,25 +1,25 @@
 %card-wrapper{
-    display: flex;
-    flex-flow: row wrap;
-    background-color: #fff;
-    box-shadow: 0 16px 28px 0 rgba(0,0,0,.22),0 25px 55px 0 rgba(0,0,0,.21) !important;
-    .display-4{
-        font-size: 20px;
-    }
+  display: flex;
+  flex-flow: row wrap;
+  background-color: #fff;
+  box-shadow: 0 16px 28px 0 rgba(0,0,0,.22),0 25px 55px 0 rgba(0,0,0,.21) !important;
+  .display-4{
+      font-size: 20px;
+  }
 }
 
 $z-depth-1 : 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12) !important;
 
 .poppins-font{
-    font-family: 'Poppins';
+  font-family: 'Poppins';
 }
 
 *{
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 a:hover{
-    text-decoration: none;
+  text-decoration: none;
 }
 
 // @mixin media-query-function($property, $value) {
@@ -29,73 +29,95 @@ a:hover{
 // }
 
 @mixin min-max-res($min, $max, $percentage){
-    @if $max < $min{
-      @error 'Max value cannot be smaller than Min value';
-    }
-    @else{
-      width : $percentage !important;
-      max-width: $max !important;
-      min-width: $min !important;
-    }
+  @if $max < $min{
+    @error 'Max value cannot be smaller than Min value';
   }
-  
-  $breakpoints: (
-    xs: 426px,
-    md: 1072px,
-    lg: 1368px
-  );
-  
-  @mixin mq-fun($breakpoint){
-    $breakpoint-value: map-get($breakpoints, $breakpoint);
-    @media (max-width: $breakpoint-value) {
-      @content;
-    }
+  @else{
+    width : $percentage !important;
+    max-width: $max !important;
+    min-width: $min !important;
   }
+}
 
-  .hide{
-    display: none !important;
-  }
+$breakpoints: (
+  xs: 426px,
+  md: 1072px,
+  lg: 1368px
+);
 
-  
-  .scroll-to-top{
-    width : 35px;
-    height : 35px;
-    border-radius : 50%;
-    background-color: rgba(100, 149, 237, 0.75);
-    position: fixed;
-    bottom : 50px;
-    right : 50px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    transition: .25s transform, background ease-in;
-    animation : show-animation .25s ease-in;
-    &:active{
-      transform : scale(.5,.5);
-    }
-    &:hover{
-      background-color: rgb(100, 149, 237);
-      div[class^="stt__"]{
-        top:calc(50% - 3px);
-      }
-    }
+@mixin mq-fun($breakpoint){
+  $breakpoint-value: map-get($breakpoints, $breakpoint);
+  @media (max-width: $breakpoint-value) {
+    @content;
+  }
+}
+
+%flex{
+  display: flex;
+  align-items: center;
+}
+
+.hide{
+  display: none !important;
+}
+
+.scroll-to-top{
+  width : 35px;
+  height : 35px;
+  border-radius : 50%;
+  background-color: rgba(100, 149, 237, 0.75);
+  position: fixed;
+  bottom : 50px;
+  right : 50px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: .25s transform, background ease-in;
+  animation : show-animation .25s ease-in;
+  &:active{
+    transform : scale(.5,.5);
+  }
+  &:hover{
+    background-color: rgb(100, 149, 237);
     div[class^="stt__"]{
-      width: 15px;
-      height: 3px;
-      background-color: #fff;
-      top:calc(50% - 1px);
-      position: absolute;
-    }
-    .stt__left{
-      transform: rotate(-45deg);
-      left: 5px;
-    }
-    .stt__right{
-      transform: rotate(45deg);
-      right:5px;
+      top:calc(50% - 3px);
     }
   }
+  div[class^="stt__"]{
+    width: 15px;
+    height: 3px;
+    background-color: #fff;
+    top:calc(50% - 1px);
+    position: absolute;
+  }
+  .stt__left{
+    transform: rotate(-45deg);
+    left: 5px;
+  }
+  .stt__right{
+    transform: rotate(45deg);
+    right:5px;
+  }
+}
 
-  html {
-    scroll-behavior: smooth;
+html {
+  scroll-behavior: smooth;
+}
+
+.header-content{
+  .display-4{
+    font-size: 8vw;
+    @include mq-fun(lg){font-size:6vw;}
+    @include mq-fun(xs){font-size:10vw;}
+  } 
+  .lead{
+    font-size: 1.5vw;
+    @include mq-fun(md){font-size:2vw;}
+    @include mq-fun(xs){font-size:5vw;}
   }
+  .lead-sub-header{
+    font-size: 1.25vw;
+    @include mq-fun(md){font-size:2vw;}
+    @include mq-fun(xs){font-size:3vw;}
+  }
+}

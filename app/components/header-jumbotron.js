@@ -8,10 +8,19 @@ export default Component.extend({
     init(){
         this._super(...arguments);
         this.set('showNavBarMob', false);
+        this.set('leadCountOne', true);
+        this.set('leadCountTwo', false);
+        this.set('leadCountThree', false);
     },
     actions:{
         showNavToggle : function(){
             this.toggleProperty('showNavBarMob');
+        },
+        leadClick : function(par){
+            this.set('leadCountOne', false);
+            this.set('leadCountTwo', false);
+            this.set('leadCountThree', false);
+            this.set(par, true);
         }
     }
 });
