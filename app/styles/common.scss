@@ -55,3 +55,47 @@ a:hover{
   .hide{
     display: none !important;
   }
+
+  
+  .scroll-to-top{
+    width : 35px;
+    height : 35px;
+    border-radius : 50%;
+    background-color: rgba(100, 149, 237, 0.75);
+    position: fixed;
+    bottom : 50px;
+    right : 50px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: .25s transform, background ease-in;
+    animation : show-animation .25s ease-in;
+    &:active{
+      transform : scale(.5,.5);
+    }
+    &:hover{
+      background-color: rgb(100, 149, 237);
+      div[class^="stt__"]{
+        top:calc(50% - 3px);
+      }
+    }
+    div[class^="stt__"]{
+      width: 15px;
+      height: 3px;
+      background-color: #fff;
+      top:calc(50% - 1px);
+      position: absolute;
+    }
+    .stt__left{
+      transform: rotate(-45deg);
+      left: 5px;
+    }
+    .stt__right{
+      transform: rotate(45deg);
+      right:5px;
+    }
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }

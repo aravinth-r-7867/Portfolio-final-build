@@ -36,7 +36,7 @@ export default Component.extend({
                 "imageIndex" : 6
             },
             {
-                "imageUrl" : "Rameshwaram-Pamban-bridge.jpg",
+                "imageUrl" : "Rameshwaram-Pamban-bridge.JPG",
                 "imageIndex" : 7
             },
             {
