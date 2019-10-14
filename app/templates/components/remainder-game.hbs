@@ -1,57 +1,73 @@
 
-<div class="col-sm-4">
-    <div class="remainder-scorecard d-flex flex-column">
-        <div class="d-flex justify-content-around align-items-center">
-            <div class="scorecard-help" onclick={{action "mobileHelpCardFun"}}>
-                Help
-            </div>
-            <b class="scorecard-label">Clicks : </b>
-            <div class="moves-scorecard">{{movesCount}}</div>
-            <b class="scorecard-label">Points :</b>
-            <div class="moves-scorecard">{{gamePoints}}</div>
-        </div>
-    </div>
-    {{#unless isMobile}}
+{{#if showLoader}}
+    <div class="CSS--loader"></div>
+{{else}}
+    <div class="col-sm-12 col-md-4 offset-md-1 d-flex flex-column">
         <div class="remainder-scorecard d-flex flex-column">
-            <div class="blockquote">
-                {{#if this.messageOnScenario}}
-                {{game-message this.messageOnScenario}}
-                {{else}}
-                {{#if this.gameTurnStatus }}
-                Now click to open the second card in <b>{{secondsNow}}</b> seconds
-                {{else}}
-                Click to open a card
-                {{/if}}
-                {{/if}}
-            </div>
-            {{#if gamePoints}}
-            <div class="d-flex ">
-                <div class="col-3 p-0 font-weight-bolder" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
-                    Accuracy
+            <div class="row m-0">
+                <div class="col-6 d-flex align-items-center">
+                    Level {{game-level gameLevelDegree}}
                 </div>
-                <div class="progress col-9 p-0">
-                    <div class="progress-bar {{accuracyPoints.class}}" role="progressbar" style={{accuracyPoints.html}}
-                        aria-valuenow={{accuracyPoints.value}} aria-valuemin="0" aria-valuemax="100">
-                        {{accuracyPoints.value}}%</div>
+                <div class="col-6">
+                    {{#if movesCount}}
+                        <button class="btn btn-warning" onclick={{action 'clearLocalData'}}>Reset game</button>
+                    {{/if}}
                 </div>
             </div>
-            {{/if}}
         </div>
-    {{/unless}}
-    {{#if this.gameEnd}}
-    <div class="remainder-scorecard blockquote mb-0">
-        Yayyyy...!! You finished the game with {{progressBarPrev.value}}% accuracy.
-    </div>
-    {{/if}}
-</div>
 
-<div class="col-sm-8 d-flex justify-content-end">
-    <div class="remainder-wrapper">
-        {{#each this.cardArray as |card index|}}
-            <div class="remainder-card {{if card.hide 'remainder-card-hide'}}" onclick={{action "cardOpen" card.value}}></div>
-        {{/each}}
+        <div class="remainder-scorecard d-flex flex-column">
+            <div class="d-flex justify-content-around align-items-center">
+                {{#if isMobile}}
+                    <div class="scorecard-help" onclick={{action "mobileHelpCardFun"}}>
+                        Help
+                    </div>
+                {{/if}}
+                <b class="scorecard-label">Clicks : </b>
+                <div class="moves-scorecard">{{movesCount}}</div>
+                <b class="scorecard-label">Points :</b>
+                <div class="moves-scorecard" onclick={{action 'clearData'}}>{{gamePoints}}</div>
+            </div>
+        </div>
+
+        {{#unless isMobile}}
+            <div class="remainder-scorecard d-flex flex-column">
+                <div class="blockquote">
+                    {{#if this.messageOnScenario}}
+                    {{game-message this.messageOnScenario}}
+                    {{else}}
+                    {{#if this.gameTurnStatus }}
+                    Now click to open the second card in <b>{{secondsNow}}</b> seconds
+                    {{else}}
+                    Click to open a card
+                    {{/if}}
+                    {{/if}}
+                </div>
+                {{#if gamePoints}}
+                <div class="d-flex ">
+                    <div class="col-3 col-sm-4 col p-0 font-weight-bolder" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+                        Accuracy
+                    </div>
+                    <div class="progress col-9 col-sm-8 p-0">
+                        <div class="progress-bar {{accuracyPoints.class}}" role="progressbar" style={{accuracyPoints.html}}
+                            aria-valuenow={{accuracyPoints.value}} aria-valuemin="0" aria-valuemax="100">
+                            {{accuracyPoints.value}}%</div>
+                    </div>
+                </div>
+                {{/if}}
+            </div>
+        {{/unless}}
+
     </div>
-</div>
+
+    <div class="col-sm-12 col-md-6 d-flex justify-content-center">
+        <div class="remainder-wrapper w-100" data-card-count={{gameLevelDegree}}>
+            {{#each this.cardArray as |card index|}}
+                <div class="remainder-card{{if card.hide ' remainder-card-hide'}}" onclick={{action "cardOpen" card.value}}></div>
+            {{/each}}
+        </div>
+    </div>
+{{/if}}
 
 {{#if isMobile}}
     <div class="remainder-mobile-help-card" active={{toggleHelpCardMobile}}>

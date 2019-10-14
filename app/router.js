@@ -11,6 +11,7 @@ Router.map(function() {
   this.route('works', function() {
     this.route('remainder');
   });
+  this.route('gallery');
 });
 
 export default Router;

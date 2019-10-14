@@ -1,0 +1,32 @@
+<div class="gallery-wrapper">
+		<div class="gw--left">
+			{{!-- <div class="gwl--header">Locations</div> --}}
+			<div class="gwl--main">
+                {{#each galleryImagesData as |imageData index|}}
+				    <div class="gwl--card" onclick={{action 'changeSlideSet' imageData.allImages index}}>
+                        <img src="/assets/images/{{imageData.thumbnail}}">
+                        <div class="gwl--caption">
+                            <span data-active={{imageData.active}}>
+                            {{imageData.title}}
+                            </span>
+                        </div>
+                    </div>
+                {{/each}}
+			</div>
+		</div>
+		<div class="gw--main">
+            <div class="gw--caret-icon-holder">
+                {{#if gwSlideIndex}}
+                    <div onclick={{action 'gwSlideShow' 'prev'}} class="CSS-caret-icon__left"></div>
+                {{/if}}
+                {{#if (is-greater (minus gwMainArrLen gwSlideIndex) 1)}}
+                    <div onclick={{action 'gwSlideShow' 'next'}} class="CSS-caret-icon__right"></div>
+                {{/if}}
+            </div>
+            <div class="gw--main-wrapper" id="gw-main-slideshow">
+                {{#each galleryMainData as |imagesData|}}
+                    <div class="gwm-slide-item" style="background-image: url(/assets/images/{{imagesData}})"></div>
+                {{/each}}
+            </div>
+		</div>
+	</div>

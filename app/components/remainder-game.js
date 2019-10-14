@@ -23,6 +23,7 @@ import { htmlSafe } from '@ember/string';
 * @gameEnd to show end game message
 * @isMobile to if it is a mobile
 * @toggleHelpCardMobile toggle switch for mobile
+* @gameLevelDegree number cards to play with in current level
 */
 
 /**
@@ -48,26 +49,41 @@ import { htmlSafe } from '@ember/string';
  * @matchedArray
  * @gamePoints
  * @movesCount
+ * @remainderLevel
  */
 
 export default Component.extend({
-    classNames: ['w-100 row justify-content-between'],
+    classNames: ['w-100 row pt-3 pb-3'],
     randomize: service(),
     init() {
         this._super(...arguments);
+
+        /**
+         * To check the device screen for mobile
+         */
         var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-        if(width < 500){
+        if (width < 500) {
             this.set('isMobile', true);
         } else {
             this.set('isMobile', false);
         }
+
+        /**To clear the finished game data
+         */
         if (parseInt(localStorage.getItem('gamePoints')) == 50) {
             localStorage.removeItem('cardArray');
             localStorage.removeItem('matchedArray');
             localStorage.removeItem('gamePoints');
             localStorage.removeItem('movesCount');
+            localStorage.removeItem('gameLevelDegree');
         }
+
+        /**To check if any incomplete game data is present 
+        * @true get the cards order, get the (if any) matched cards and remove them
+        * @false for new game find the level
+        */
         if (localStorage.getItem("cardArray")) {
+            this.set('gameLevelDegree', localStorage.getItem('remainderLevel'));
             this.set('cardArray', JSON.parse(localStorage.getItem("cardArray")));
             if (localStorage.getItem('matchedArray')) {
                 this.set('matchedArray', JSON.parse(localStorage.getItem('matchedArray')));
@@ -85,9 +101,17 @@ export default Component.extend({
                 this.set('matchedArray', []);
             }
         } else {
+            if (localStorage.getItem('remainderLevel')) {
+            } else {
+                localStorage.setItem('remainderLevel', 1);
+                this.set('gameLevelDegree', 1);
+            }
+
             this.set('cardArray', []);
             this.set('matchedArray', []);
-            for (var i = 1, j = 0; i < 26; i++ , j = j + 2) {
+
+            ///Set of cards are multiples of 6
+            for (var i = 1, j = 0; i <= this.gameLevelDegree * 6; i++ , j = j + 2) {
                 let obj = {};
                 obj.value = i;
                 obj.show = false;
@@ -113,6 +137,38 @@ export default Component.extend({
         this.set('gameStatus', []);
         this.set('progressBarPrev', {});
         this.set('gameEnd', false);
+        this.set('showLoader', false);
+    },
+    resetGame: function () {
+        //showing loader for 3 seconds
+        this.set('showLoader', true);
+        var self = this;
+        setTimeout(function () {
+            self.set('showLoader', false);
+        }, 3000);
+
+        //clearing off prev stored data (cardArray is renewed below with new array)
+        localStorage.setItem('movesCount', 0);
+        localStorage.setItem('matchedArray', []);
+        localStorage.setItem('gamePoints', 0);
+
+        this.set('cardArray', []);
+        this.set('matchedArray', []);
+        this.set('movesCount', 0);
+        this.set('gamePoints', 0);
+        this.set('gameLevelDegree', localStorage.getItem('remainderLevel'));
+
+        ///Set of cards are multiples of 6
+        for (var i = 1, j = 0; i <= this.gameLevelDegree * 6; i++ , j = j + 2) {
+            let obj = {};
+            obj.value = i;
+            obj.show = false;
+            obj.hide = false;
+            this.cardArray.pushObject(obj);
+            this.cardArray.pushObject(obj);
+        }
+        this.set('cardArray', this.randomize.randomizeArray(this.cardArray));
+        localStorage.setItem('cardArray', JSON.stringify(this.cardArray));
     },
     accuracyPoints: computed("movesCount", function () {
         if (this.gamePoints == 0) {
@@ -123,7 +179,7 @@ export default Component.extend({
             this.set('progressBarPrev', { 'html': htmlSafe('width:' + result + '%'), 'value': result, 'class': className });
             return this.progressBarPrev;
         } else {
-            if(Object.keys(this.progressBarPrev).length === 0){
+            if (Object.keys(this.progressBarPrev).length === 0) {
                 let result = Math.round((this.gamePoints / this.movesCount) * 100);
                 let className = result > 65 ? 'bg-success' : result > 35 ? 'bg-primary' : result < 5 ? 'text-warning bg-danger' : 'bg-danger';
                 this.set('progressBarPrev', { 'html': htmlSafe('width:' + result + '%'), 'value': result, 'class': className });
@@ -140,18 +196,22 @@ export default Component.extend({
         localStorage.setItem('matchedArray', JSON.stringify(this.matchedArray));
         this.set('gamePoints', this.gamePoints + 2);
         localStorage.setItem('gamePoints', this.gamePoints);
-        if (this.gamePoints == 50) {
+        if (this.gamePoints == this.cardArray.length) {
             this.toggleProperty('gameEnd');
-            localStorage.removeItem('cardArray');
-            localStorage.removeItem('matchedArray');
-            localStorage.removeItem('gamePoints');
-            localStorage.removeItem('movesCount');
+            var self = this;
+            // setTimeout(function(){
+            //     self.toggleProperty('gameEnd');
+            // }, 10000);
+            localStorage.setItem('remainderLevel', JSON.parse(localStorage.getItem('remainderLevel')) + 0.5);
+             setTimeout(function(){
+                self.resetGame();
+            }, 1000);
         }
         this.set('messageOnScenario', 2);
         var self = this;
         setTimeout(function () {
-            $(self.firstElem).addClass('hide');
-            $(self.secondElem).addClass('hide');
+            $(self.firstElem).addClass('remainder-card-hide');
+            $(self.secondElem).addClass('remainder-card-hide');
             self.turnResetter();
         }, 1000);
     },
@@ -239,8 +299,14 @@ export default Component.extend({
                 }
             }
         },
-        mobileHelpCardFun : function(){
+        mobileHelpCardFun: function () {
             this.toggleProperty('toggleHelpCardMobile');
+        },
+        clearLocalData: function () {
+            this.resetGame();
+        },
+        clearData: function () {
+            window.localStorage.clear();
         }
     }
-});
+}); 

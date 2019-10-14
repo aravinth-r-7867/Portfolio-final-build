@@ -104,20 +104,78 @@ html {
   scroll-behavior: smooth;
 }
 
+////////////////////////////////////////////
+//////Responsive font size
+////////////////////////////////////////////
+
+%heading-res-font{
+  font-size: 8vw;
+  @include mq-fun(lg){font-size:6vw;}
+  @include mq-fun(xs){font-size:10vw;}
+}
+
+%subheader-h2-res-font{
+  font-size: 6vw;
+  @include mq-fun(lg){font-size:4vw;}
+  @include mq-fun(xs){font-size:5vw;}
+}
+
+%subheader-res-font{
+  font-size: 1.5vw;
+  @include mq-fun(md){font-size:2vw;}
+  @include mq-fun(xs){font-size:5vw;}
+}
+
+%small-text-res-font{
+  font-size: 1.25vw;
+  @include mq-fun(md){font-size:2vw;}
+  @include mq-fun(xs){font-size:3vw;}
+}
+
+///Home page
 .header-content{
   .display-4{
-    font-size: 8vw;
-    @include mq-fun(lg){font-size:6vw;}
-    @include mq-fun(xs){font-size:10vw;}
+    @extend %heading-res-font;
   } 
   .lead{
-    font-size: 1.5vw;
-    @include mq-fun(md){font-size:2vw;}
-    @include mq-fun(xs){font-size:5vw;}
+    @extend %subheader-res-font;
   }
   .lead-sub-header{
-    font-size: 1.25vw;
-    @include mq-fun(md){font-size:2vw;}
-    @include mq-fun(xs){font-size:3vw;}
+    @extend %small-text-res-font;
   }
+}
+
+//Remainder game
+
+.remainder-scorecard{
+  .scorecard-label, .font-weight-bolder, .blockquotes{
+    @extend %subheader-res-font;
+  }
+  .moves-scorecard{
+    @extend %subheader-h2-res-font;
+  }
+}
+
+///CSS loader
+
+.CSS--loader {
+  border: 8px solid #fff;
+  border-radius: 50%;
+  border-top: 8px solid #007bff;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 1s linear infinite; /* Safari */
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

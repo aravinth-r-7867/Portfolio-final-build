@@ -1,0 +1,166 @@
+.gallery-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+  }
+  
+  .gw--left {
+    width: 25vw;
+    background-color: lightgray;
+  }
+  
+  .gw--main {
+    width: 75vw;
+    padding: 30px 0;
+    position: relative;
+    .gw--main-wrapper {
+      @extend %flex;
+      width: 100%;
+      height: 100%;
+      -webkit-transition: -webkit-transform 1s;
+      transition: all 1s;
+    }
+    overflow-x: hidden;
+    .CSS-caret-icon__left,
+    .CSS-caret-icon__right,
+    .CSS-caret-icon__close {
+  
+      &::after,
+      &::before {
+        background-color: #000;
+      }
+    }
+    .gw--caret-icon-holder{
+        position: absolute;
+        width: 100%;
+        top: 50%;
+        left:0;
+        padding: 0 30px;
+        @extend %flex;
+        justify-content: space-between;
+        z-index: 2;
+        .CSS-caret-icon__right{
+          margin-left: auto;
+        }
+    }
+  }
+  
+  .gwm-slide-item {
+    min-width: 75vw;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+  
+  .gwl--header {
+    height: 50px;
+    border-right: 2px solid #333;
+    border-bottom: 2px solid #333;
+    @extend %flex;
+    justify-content: center;
+    font-size: 25px;
+    background-color: #fff;
+  }
+  
+  .gwl--main {
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+  
+  .gwl--card {
+    width: 20vw;
+    height: 15vw;
+    margin: calc(5vw/2) auto;
+    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.25);
+    position: relative;
+    cursor: pointer;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+    .gwl--caption{
+      position: absolute;
+      width:100%;
+      height: 100%;
+      left:0;
+      top:0;
+      @extend %flex;
+      justify-content: center;
+      span{
+        border:0.001rem solid #fff;
+        color:#fff;
+        padding: 5px;
+        z-index: 1;
+        width: 70%;
+        text-align: center;
+        transition: .25s background, color, border ease-in;
+        &[data-active]{
+          background-color: #fff;
+          color:#000;
+        }
+      }
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      left: 0;
+      top: 0;
+    }
+    &:hover{
+      .gwl--caption span{
+        &{
+          background-color: #fff;
+          color:#000;
+        }
+      }
+    }
+  }
+  
+  @include mq-fun(xs){
+    .gallery-wrapper{
+      flex-direction: column;
+    }
+    .gw--left, .gw--main{
+      width:100%;
+    }
+    .gw--left{
+      height: 25vh;
+    }
+    .gw--main{
+      height: 75vh;
+    }
+    .gwl--main{
+      height: 100%;
+      overflow-x: auto;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+    }
+    .gwl--card{
+      min-width: 50vw;
+      margin : 0 10px;
+      height:auto;
+    }
+    .gwl--card .gwl--caption span{
+      width: 90%;
+      font-size: 4vw;
+    }
+    .gwm-slide-item{
+      min-width: 100%;
+    }
+    .gw--main{
+      .CSS-caret-icon__left,
+      .CSS-caret-icon__right,
+      .CSS-caret-icon__close {
+        &::after,
+        &::before {
+          background-color: #fff;
+        }
+      }
+    }
+  }
+  
