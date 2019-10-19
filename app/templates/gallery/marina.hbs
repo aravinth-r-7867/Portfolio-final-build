@@ -1,0 +1,7 @@
+{{#swiper-container options=myOptions}}
+    {{#each galleryMainData as |imagesData|}}
+        {{#swiper-slide}}
+            <div class="gwm-slide-item" style="background-image: url(/assets/images/{{imagesData}})"></div>
+        {{/swiper-slide}}
+    {{/each}}
+{{/swiper-container}}

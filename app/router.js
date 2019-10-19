@@ -11,7 +11,12 @@ Router.map(function() {
   this.route('works', function() {
     this.route('remainder');
   });
-  this.route('gallery');
+  this.route('gallery', function() {
+    this.route('marina');
+    this.route('kerala');
+    this.route('south-india');
+    this.route('manali');
+  });
 });
 
 export default Router;

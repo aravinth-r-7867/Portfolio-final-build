@@ -1,28 +1,30 @@
 <div class="container" id="scrollHere">
+{{!--Faded backdrop--}}
+<div class="header-faded-backdrop"></div>
 
     {{!--Nav bar--}}
-    {{!-- <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg">
+        <span onclick={{action "showNavToggle"}}>Menu</span>
         <button onclick={{action "showNavToggle"}} class="navbar-toggler {{if showNavBarMob 'clicked'}}" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon nti__first"></span>
-            <span class="navbar-toggler-icon hiddenOnClck"></span>
             <span class="navbar-toggler-icon nti__second"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end {{if showNavBarMob 'show'}}" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    {{#link-to "about" class="nav-link"}}
-                        About
+                    {{#link-to "gallery.south-india" class="nav-link"}}
+                        Gallery
                     {{/link-to}}
                 </li>
                 <li class="nav-item">
-                    {{#link-to "works" class="nav-link"}}
-                        My works
+                    {{#link-to "works.remainder" class="nav-link"}}
+                        My work
                     {{/link-to}}
                 </li>
             </ul>
         </div>
-    </nav> --}}
+    </nav> 
     {{!--Nav bar--}}
 
     <div class="header-content">
