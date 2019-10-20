@@ -10,7 +10,7 @@ export default Service.extend({
             'active' : true,
             'url' : 'gallery.marina',
             'allImages' : [
-                'couples-in-marina.jpg',
+                'couples-in-marina.JPG',
                 'marina-boat.JPG',
                 'marina-sun-2.JPG',
                 'marina-sun-1.JPG'
@@ -25,7 +25,7 @@ export default Service.extend({
                 'Arikkal-falls.JPG',
                 'Athirapally-falls.jpg',
                 'Alleppey-boat.JPG',
-                'Arikkal_falls_motion_capture.jpg',
+                'Arikkal_falls_motion_capture.JPG',
                 'Aluva_aparments.jpg',
                 'Anchelpetty_rubber_tree.jpg',
                 'Aluva-aquaduct-bridge.jpg'
@@ -41,7 +41,7 @@ export default Service.extend({
                 'manali-tree.JPG',
                 'manali-stream.jpg',
                 'Delhi_highway_tower.jpg',
-                'manali_fiber_handcraft.jpg',
+                'manali_fiber_handcraft.JPG',
                 'manali-buddha-temple.jpg'
             ] 
             },
@@ -51,19 +51,19 @@ export default Service.extend({
             'active' : false,
             'url' : 'gallery.south-india',
             'allImages' : [
-                'kanyakumari-wave.jpg',
+                'kanyakumari-wave.JPG',
                 'kanyakumari-horse.JPG',
                 'kanyakumari-sea-roaring.JPG',
                 'kanyakumari-boat.JPG',
-                'kaveri-water.jpg',
+                'kaveri-water.JPG',
                 'pitchavaram-sun.jpg',
-                'Rameshwaram-Pamban-bridge.jpg',
-                'srirangam-sculpture.jpg',
+                'Rameshwaram-Pamban-bridge.JPG',
+                'srirangam-sculpture.JPG',
                 'srirangam-temple.jpg',
-                'tanjore-pillar.jpg',
+                'tanjore-pillar.JPG',
                 'trichy-uchi-pillayar-kovil.jpg',
-                'southindia-1.jpg',
-                'southindia-2.jpg',
+                'southindia-1.JPG',
+                'southindia-2.JPG',
                 'southindia-3.jpg',
                 'southindia-4.jpg',
                 'southindia-5.jpg',
