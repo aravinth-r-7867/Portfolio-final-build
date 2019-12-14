@@ -1,17 +1,21 @@
 import { helper } from '@ember/component/helper';
 
 export function gameLevel(params/*, hash*/) {
-  if(params[0] == 1){
+  let temp = params[0];
+  if(params[1] == "sendPrevLevel"){
+   temp = temp - 0.5;
+  }
+  if(temp == 1){
     return 'One';
-  }else if (params[0] == 1.5){
+  }else if (temp == 1.5){
     return 'Two ';
-  }else if(params[0] == 2){
+  }else if(temp == 2){
     return 'Three';
-  } else if(params[0] == 2.5){
+  } else if(temp == 2.5){
     return 'Four';
-  }else if(params[0] == 3){
+  }else if(temp == 3){
     return 'Five';
-  }else if(params[0] == 3.5){
+  }else if(temp == 3.5){
     return 'Six';
   }
 }

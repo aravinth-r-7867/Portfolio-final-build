@@ -1,5 +1,7 @@
 
-{{#if showLoader}}
+{{#if showLevelChange}}
+    {{level-change accuracy=showLevelChange gameLevel=(game-level gameLevelDegree 'sendPrevLevel')}}
+{{else if showLoader}}
     <div class="CSS--loader"></div>
 {{else}}
     <div class="col-sm-12 col-md-4 offset-md-1 d-flex flex-column">

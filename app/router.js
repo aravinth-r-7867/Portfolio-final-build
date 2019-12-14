@@ -16,6 +16,7 @@ Router.map(function() {
     this.route('kerala');
     this.route('south-india');
     this.route('manali');
+    this.route('rajasthan');
   });
 });
 

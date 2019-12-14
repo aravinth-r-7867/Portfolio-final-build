@@ -81,6 +81,29 @@ export default Service.extend({
                 'southindia-17.jpg',
             ] 
             },
+            {
+            'thumbnail' : 'hawa-mahal-with-sun.JPG',
+            'title' : 'Rajasthan',
+            'active' : false,
+            'url' : 'gallery.rajasthan',
+            'allImages' : [
+                'amber-pigeons.JPG',
+                'amber-fort-sunshade.JPG',
+                'meharang-puppet.JPG',
+                'jaisalmer-fort-landscape.JPG',
+                'jaisalmer-fort-pathway.JPG',
+                'jaisalmer-fort-and-city.JPG',
+                'jaisalmer-window-sill.JPG',
+                'jaisalmer-maharaja-hal-pillars.JPG',
+                'jaisalmer-maharaja-fort-architecture.JPG',
+                'jashwand-thada.JPG',
+                'jaisalmer-fort-with-blue-sky.JPG',
+                'udaipur-pigeon.JPG',
+                'udaipur-lake-arch.JPG',
+                'sam-clouds.JPG',
+                'hawa-mahal-with-sun.JPG'
+            ]
+            }
         ]);
     }
 });

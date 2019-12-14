@@ -12,6 +12,7 @@ import { htmlSafe } from '@ember/string';
 * @movesCount to keep track of the number of times the user opened the cards,
 * @gamePoints number of card removed by picking a correct pair,
 * @cardTimeLimit number of seconds to open the second card,
+* @misMatchCloseTime number of seconds to close the mismatched cards,
 * @firstValue value of card which is clicked first,
 * @secondValue value of card which is clicked second,
 * @firstElem DOM element of first clicked card,
@@ -24,6 +25,9 @@ import { htmlSafe } from '@ember/string';
 * @isMobile to if it is a mobile
 * @toggleHelpCardMobile toggle switch for mobile
 * @gameLevelDegree number cards to play with in current level
+* @imageList Images with specific numbers for first round
+* @showLoader Variable to display loader when game reset 
+* @showLevelChange Variable to display game level up template
 */
 
 /**
@@ -52,11 +56,28 @@ import { htmlSafe } from '@ember/string';
  * @remainderLevel
  */
 
+ /**
+  * @game-level helper which takes gameLevelDegree as parameter and returns the level in WORDS
+  */
+
 export default Component.extend({
     classNames: ['w-100 row pt-3 pb-3'],
     randomize: service(),
     init() {
         this._super(...arguments);
+
+        /**
+         * To set images for the numbers
+         */
+
+         this.set('imageList', {
+             1:'harry',
+             2:'hermoine',
+             3:'ron',
+             4:'dumbledore',
+             5:'hagrid',
+             6:'dobby'
+         });
 
         /**
          * To check the device screen for mobile
@@ -125,6 +146,7 @@ export default Component.extend({
         this.set('gamePoints', localStorage.getItem('gamePoints') ? parseInt(localStorage.getItem('gamePoints')) : 0);
         this.set('movesCount', localStorage.getItem('movesCount') ? parseInt(localStorage.getItem('movesCount')) : 0);
         this.set('cardTimeLimit', 5000);
+        this.set('misMatchCloseTime', 1000);
         this.set('secondsNow', 5);
         this.set('gameTurnStatus', 0);
         this.set('messageOnScenario', false);
@@ -137,15 +159,21 @@ export default Component.extend({
         this.set('gameStatus', []);
         this.set('progressBarPrev', {});
         this.set('gameEnd', false);
+        this.set('showLevelChange', null);
         this.set('showLoader', false);
     },
-    resetGame: function () {
+    resetGame: function (status) {
         //showing loader for 3 seconds
-        this.set('showLoader', true);
-        var self = this;
-        setTimeout(function () {
-            self.set('showLoader', false);
-        }, 3000);
+        if(status == 'reset game'){
+            this.set('showLoader', true);
+            var self = this;
+            setTimeout(function () {
+                self.set('showLoader', false);
+            }, 3000);
+        }
+        else{
+            this.set('showLevelChange', Math.round((this.gamePoints / this.movesCount) * 100));
+        }
 
         //clearing off prev stored data (cardArray is renewed below with new array)
         localStorage.setItem('movesCount', 0);
@@ -171,6 +199,9 @@ export default Component.extend({
         localStorage.setItem('cardArray', JSON.stringify(this.cardArray));
     },
     accuracyPoints: computed("movesCount", function () {
+        if(this.showLevelChange){
+            console.log('here');
+        }
         if (this.gamePoints == 0) {
             return htmlSafe('width:0;color:#007bff;background:none;padding-left:10px;');
         } else if (this.movesCount % 2 == 0) {
@@ -189,22 +220,25 @@ export default Component.extend({
     }),
     basicCardOpen: function (element, value) {
         $(element).addClass('rotate');
-        element.innerHTML = value;
+        if(this.gameLevelDegree == 1){
+            $(element).addClass('with-image');
+            element.style.backgroundImage = `url(/assets/images-for-memory-game/${this.imageList[value]}.jpg)`;
+        }else{
+            element.innerHTML = value;
+        }
     },
     matchCard: function () {
         this.matchedArray.pushObject(this.firstValue);
         localStorage.setItem('matchedArray', JSON.stringify(this.matchedArray));
         this.set('gamePoints', this.gamePoints + 2);
         localStorage.setItem('gamePoints', this.gamePoints);
+        //Game Level completion
         if (this.gamePoints == this.cardArray.length) {
             this.toggleProperty('gameEnd');
             var self = this;
-            // setTimeout(function(){
-            //     self.toggleProperty('gameEnd');
-            // }, 10000);
             localStorage.setItem('remainderLevel', JSON.parse(localStorage.getItem('remainderLevel')) + 0.5);
              setTimeout(function(){
-                self.resetGame();
+                self.resetGame('level completion');
             }, 1000);
         }
         this.set('messageOnScenario', 2);
@@ -221,18 +255,30 @@ export default Component.extend({
         setTimeout(function () {
             $(self.firstElem).removeClass('rotate');
             $(self.secondElem).removeClass('rotate');
+            if(this.gameLevelDegree == 1){
+                $(self.firstElem).removeClass('with-image');
+                $(self.secondElem).removeClass('with-image');
+            }
             self.turnResetter();
-        }, 2000);
+        }, self.misMatchCloseTime);
     },
     turnResetter: function () {
         this.set('secondsNow', 5);
         this.set('gameTurnStatus', 0);
         this.set('messageOnScenario', false);
         if (typeof this.firstElem == "object") {
-            this.firstElem.innerHTML = '';
+            if(this.gameLevelDegree == 1){
+                this.firstElem.style = '';
+            } else{
+                this.firstElem.innerHTML = '';
+            }
         }
         if (typeof this.secondElem == "object") {
-            this.secondElem.innerHTML = '';
+            if(this.gameLevelDegree == 1){
+                this.secondElem.style = '';
+            } else{
+                this.secondElem.innerHTML = '';
+            }
         }
         this.set('firstValue', false);
         this.set('firstElem', '');
@@ -268,6 +314,9 @@ export default Component.extend({
                     innerScope.firstCardTimeLimit = setTimeout(function () {
                         clearInterval(innerScope.secondCardTimeLimit);
                         $(innerScope.firstElem).removeClass('rotate');
+                        if(this.gameLevelDegree == 1){
+                            $(innerScope.firstElem).removeClass('with-image');
+                        }
                         innerScope.set('messageOnScenario', 1);
                         setTimeout(function () {
                             innerScope.turnResetter();
@@ -303,7 +352,7 @@ export default Component.extend({
             this.toggleProperty('toggleHelpCardMobile');
         },
         clearLocalData: function () {
-            this.resetGame();
+            this.resetGame('reset game');
         },
         clearData: function () {
             window.localStorage.clear();
