@@ -131,7 +131,7 @@ export default Component.extend({
             this.set('cardArray', []);
             this.set('matchedArray', []);
 
-            ///Set of cards are multiples of 6
+            ///Set of cards in multiples of 6
             for (var i = 1, j = 0; i <= this.gameLevelDegree * 6; i++ , j = j + 2) {
                 let obj = {};
                 obj.value = i;
@@ -219,13 +219,13 @@ export default Component.extend({
         }
     }),
     basicCardOpen: function (element, value) {
-        $(element).addClass('rotate');
         if(this.gameLevelDegree == 1){
             $(element).addClass('with-image');
             element.style.backgroundImage = `url(/assets/images-for-memory-game/${this.imageList[value]}.jpg)`;
         }else{
             element.innerHTML = value;
         }
+        $(element).addClass('rotate');
     },
     matchCard: function () {
         this.matchedArray.pushObject(this.firstValue);

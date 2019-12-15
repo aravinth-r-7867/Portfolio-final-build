@@ -1,4 +1,3 @@
-
 {{#if showLevelChange}}
     {{level-change accuracy=showLevelChange gameLevel=(game-level gameLevelDegree 'sendPrevLevel')}}
 {{else if showLoader}}
@@ -90,3 +89,12 @@
         <div onclick={{action "mobileHelpCardFun"}} class="rmhc--close">Close</div>
     </div>
 {{/if}}
+
+{{!--preload images--}}
+    {{#if (is-equal gameLevelDegree 1)}}
+    <img src="/assets/images-for-memory-game/level-up.png" style="display:none;">
+        {{#each-in imageList as |index imgUrl|}}
+            <img src="/assets/images-for-memory-game/{{imgUrl}}.jpg" style="display:none;">
+        {{/each-in}}
+    {{/if}}
+{{!--preload images--}}
