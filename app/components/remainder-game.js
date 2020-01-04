@@ -19,7 +19,6 @@ import { htmlSafe } from '@ember/string';
 * @secondElem DOM element of second clicked card,
 * @secondsNow to display the time seconds remaining for the time limit to open the second card,
 * @matchedArray array to contain values from matched cards,
-* @gameStatus array that contains last five game plays as an input to game status message
 * @progressBarPrev to save previous progress bar html, points and classnames on odd move counts
 * @gameEnd to show end game message
 * @isMobile to if it is a mobile
@@ -36,6 +35,7 @@ import { htmlSafe } from '@ember/string';
 * @turnResetter to reset values after a turn
 * @misMatch when cards don't match
 * @accuracyPoints to update progress bar length
+* @initializeGame function to initialize the game variables and array datas
 */
 
 /**
@@ -44,7 +44,7 @@ import { htmlSafe } from '@ember/string';
 
 /**
 * @secondCardTimeLimit interval function that starts when first card is opened
-* @innerScope to store this object
+* @this to store this object
 * @firstCardTimeLimit time count for player to open the second card in a turn
 */
 
@@ -82,34 +82,34 @@ export default Component.extend({
         /**
          * To check the device screen for mobile
          */
-        var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-        if (width < 500) {
-            this.set('isMobile', true);
-        } else {
-            this.set('isMobile', false);
-        }
+        this.set('isMobile', ((window.innerWidth > 0) ? window.innerWidth : screen.width) < 500);
 
         /**To clear the finished game data
          */
-        if (parseInt(localStorage.getItem('gamePoints')) == 50) {
+        if (parseInt(localStorage.getItem('gamePoints')) == 50) { //cleanUp[1]
             localStorage.removeItem('cardArray');
             localStorage.removeItem('matchedArray');
             localStorage.removeItem('gamePoints');
             localStorage.removeItem('movesCount');
-            localStorage.removeItem('gameLevelDegree');
         }
 
         /**To check if any incomplete game data is present 
         * @true get the cards order, get the (if any) matched cards and remove them
-        * @false for new game find the level
+        * @false for new game with game level as one 
         */
         if (localStorage.getItem("cardArray")) {
             this.set('gameLevelDegree', localStorage.getItem('remainderLevel'));
             this.set('cardArray', JSON.parse(localStorage.getItem("cardArray")));
+            this.set('matchedArray', []);
+            this.set('gamePoints', localStorage.getItem('gamePoints') ? parseInt(localStorage.getItem('gamePoints')) : 0);
+        this.set('movesCount', localStorage.getItem('movesCount') ? parseInt(localStorage.getItem('movesCount')) : 0);
+            /**
+             * Check any matched cards already
+             */
             if (localStorage.getItem('matchedArray')) {
                 this.set('matchedArray', JSON.parse(localStorage.getItem('matchedArray')));
-                let matchLen = this.matchedArray.length;
-                let cardArrLen = this.cardArray.length;
+                const matchLen = this.matchedArray.length;
+                const cardArrLen = this.cardArray.length;
                 for (var i = 0; i < matchLen; i++) {
                     for (var j = 0; j < cardArrLen; j++) {
                         if (this.cardArray[j].value == this.matchedArray[i]) {
@@ -118,33 +118,11 @@ export default Component.extend({
                         }
                     }
                 }
-            } else {
-                this.set('matchedArray', []);
             }
         } else {
-            if (localStorage.getItem('remainderLevel')) {
-            } else {
-                localStorage.setItem('remainderLevel', 1);
-                this.set('gameLevelDegree', 1);
-            }
-
-            this.set('cardArray', []);
-            this.set('matchedArray', []);
-
-            ///Set of cards in multiples of 6
-            for (var i = 1, j = 0; i <= this.gameLevelDegree * 6; i++ , j = j + 2) {
-                let obj = {};
-                obj.value = i;
-                obj.show = false;
-                obj.hide = false;
-                this.cardArray.pushObject(obj);
-                this.cardArray.pushObject(obj);
-            }
-            this.set('cardArray', this.randomize.randomizeArray(this.cardArray));
-            localStorage.setItem('cardArray', JSON.stringify(this.cardArray));
+            this.initializeGame(1);
         }
-        this.set('gamePoints', localStorage.getItem('gamePoints') ? parseInt(localStorage.getItem('gamePoints')) : 0);
-        this.set('movesCount', localStorage.getItem('movesCount') ? parseInt(localStorage.getItem('movesCount')) : 0);
+        
         this.set('cardTimeLimit', 5000);
         this.set('misMatchCloseTime', 1000);
         this.set('secondsNow', 5);
@@ -156,67 +134,57 @@ export default Component.extend({
         this.set('secondElem', '');
         this.set('toggleHelpCardMobile', false);
 
-        this.set('gameStatus', []);
         this.set('progressBarPrev', {});
         this.set('gameEnd', false);
         this.set('showLevelChange', null);
         this.set('showLoader', false);
     },
-    resetGame: function (status) {
-        //showing loader for 3 seconds
-        if(status == 'reset game'){
-            this.set('showLoader', true);
-            var self = this;
-            setTimeout(function () {
-                self.set('showLoader', false);
-            }, 3000);
-        }
-        else{
-            this.set('showLevelChange', Math.round((this.gamePoints / this.movesCount) * 100));
-        }
-
-        //clearing off prev stored data (cardArray is renewed below with new array)
-        localStorage.setItem('movesCount', 0);
-        localStorage.setItem('matchedArray', []);
-        localStorage.setItem('gamePoints', 0);
-
+    initializeGame(gameLevelDegree){
+        const gameLevelDegreeTemp = gameLevelDegree?gameLevelDegree:1;
+        localStorage.removeItem('cardArray');
+        localStorage.removeItem('matchedArray');
+        localStorage.removeItem('gamePoints');
+        localStorage.removeItem('movesCount');
+        localStorage.setItem('remainderLevel', gameLevelDegreeTemp);
+        this.set('gameLevelDegree', gameLevelDegreeTemp);
         this.set('cardArray', []);
         this.set('matchedArray', []);
-        this.set('movesCount', 0);
         this.set('gamePoints', 0);
-        this.set('gameLevelDegree', localStorage.getItem('remainderLevel'));
-
-        ///Set of cards are multiples of 6
+        this.set('movesCount', 0);
+        ///Set of cards in multiples of 6
         for (var i = 1, j = 0; i <= this.gameLevelDegree * 6; i++ , j = j + 2) {
-            let obj = {};
+            let obj = {
+                show:false,
+                hide:false
+            }
             obj.value = i;
-            obj.show = false;
-            obj.hide = false;
             this.cardArray.pushObject(obj);
             this.cardArray.pushObject(obj);
         }
         this.set('cardArray', this.randomize.randomizeArray(this.cardArray));
         localStorage.setItem('cardArray', JSON.stringify(this.cardArray));
     },
-    accuracyPoints: computed("movesCount", function () {
-        if(this.showLevelChange){
-            console.log('here');
+    resetGame: function (status) {
+        //showing loader for 3 seconds
+        if(status == 'reset game'){
+            this.set('showLoader', true);
+            setTimeout(() => {this.set('showLoader', false);}, 3000);
         }
+        else{
+            this.set('showLevelChange', Math.round((this.gamePoints / this.movesCount) * 100));
+        }
+        //clearing off prev stored data (cardArray is renewed below with new array)
+        this.initializeGame(localStorage.getItem('remainderLevel'));
+    },
+    accuracyPoints: computed("movesCount", function () {
         if (this.gamePoints == 0) {
             return htmlSafe('width:0;color:#007bff;background:none;padding-left:10px;');
-        } else if (this.movesCount % 2 == 0) {
+        } else {
             let result = Math.round((this.gamePoints / this.movesCount) * 100);
             let className = result > 65 ? 'bg-success' : result > 35 ? 'bg-primary' : result < 5 ? 'text-warning bg-danger' : 'bg-danger';
             this.set('progressBarPrev', { 'html': htmlSafe('width:' + result + '%'), 'value': result, 'class': className });
             return this.progressBarPrev;
-        } else {
-            if (Object.keys(this.progressBarPrev).length === 0) {
-                let result = Math.round((this.gamePoints / this.movesCount) * 100);
-                let className = result > 65 ? 'bg-success' : result > 35 ? 'bg-primary' : result < 5 ? 'text-warning bg-danger' : 'bg-danger';
-                this.set('progressBarPrev', { 'html': htmlSafe('width:' + result + '%'), 'value': result, 'class': className });
-            }
-            return this.progressBarPrev;
-        }
+        } 
     }),
     basicCardOpen: function (element, value) {
         if(this.gameLevelDegree == 1){
@@ -235,32 +203,27 @@ export default Component.extend({
         //Game Level completion
         if (this.gamePoints == this.cardArray.length) {
             this.toggleProperty('gameEnd');
-            var self = this;
             localStorage.setItem('remainderLevel', JSON.parse(localStorage.getItem('remainderLevel')) + 0.5);
-             setTimeout(function(){
-                self.resetGame('level completion');
-            }, 1000);
+            setTimeout(()=>{this.resetGame('level completion');}, 1000);
         }
         this.set('messageOnScenario', 2);
-        var self = this;
-        setTimeout(function () {
-            $(self.firstElem).addClass('remainder-card-hide');
-            $(self.secondElem).addClass('remainder-card-hide');
-            self.turnResetter();
+        setTimeout(()=> {
+            $(this.firstElem).addClass('remainder-card-hide');
+            $(this.secondElem).addClass('remainder-card-hide');
+            this.turnResetter();
         }, 1000);
     },
     misMatch: function () {
         this.set('messageOnScenario', 3);
-        var self = this;
-        setTimeout(function () {
-            $(self.firstElem).removeClass('rotate');
-            $(self.secondElem).removeClass('rotate');
+        setTimeout(()=> {
+            $(this.firstElem).removeClass('rotate');
+            $(this.secondElem).removeClass('rotate');
             if(this.gameLevelDegree == 1){
-                $(self.firstElem).removeClass('with-image');
-                $(self.secondElem).removeClass('with-image');
+                $(this.firstElem).removeClass('with-image');
+                $(this.secondElem).removeClass('with-image');
             }
-            self.turnResetter();
-        }, self.misMatchCloseTime);
+            this.turnResetter();
+        }, this.misMatchCloseTime);
     },
     turnResetter: function () {
         this.set('secondsNow', 5);
@@ -289,7 +252,6 @@ export default Component.extend({
         cardOpen: function (value, event) {
             if ((this.gameTurnStatus == 1 || this.gameTurnStatus == 0) && this.matchedArray.includes(value) == false && this.firstElem != event.target) {
 
-                var innerScope = this;
                 this.set('movesCount', this.movesCount + 1);
                 localStorage.setItem('movesCount', this.movesCount);
                 if (this.firstValue) {
@@ -305,23 +267,21 @@ export default Component.extend({
                 if (this.gameTurnStatus == 0) {
                     this.set('gameTurnStatus', 1);
                     this.basicCardOpen(this.firstElem, value);
-                    innerScope.secondCardTimeLimit = setInterval(function () {
-                        innerScope.set('secondsNow', innerScope.secondsNow - 1);
+                    this.secondCardTimeLimit = setInterval(()=> {
+                        this.decrementProperty('secondsNow');
                     }, 1000);
                     /**
                      * To reset variables and clear timer when player misses to open the second card in given time
                      */
-                    innerScope.firstCardTimeLimit = setTimeout(function () {
-                        clearInterval(innerScope.secondCardTimeLimit);
-                        $(innerScope.firstElem).removeClass('rotate');
+                    this.firstCardTimeLimit = setTimeout(()=>{
+                        clearInterval(this.secondCardTimeLimit);
+                        $(this.firstElem).removeClass('rotate');
                         if(this.gameLevelDegree == 1){
-                            $(innerScope.firstElem).removeClass('with-image');
+                            $(this.firstElem).removeClass('with-image');
                         }
-                        innerScope.set('messageOnScenario', 1);
-                        setTimeout(function () {
-                            innerScope.turnResetter();
-                        }, 0)
-                    }, innerScope.cardTimeLimit);
+                        this.set('messageOnScenario', 1);
+                        setTimeout(()=> {this.turnResetter();}, 0)
+                    }, this.cardTimeLimit);
                 }
                 /**
                  * Second card opened
@@ -330,19 +290,19 @@ export default Component.extend({
                     this.set('gameTurnStatus', 2);
                     this.set('secondElem', event.target);
                     this.basicCardOpen(this.secondElem, value);
-                    clearInterval(innerScope.secondCardTimeLimit);
+                    clearInterval(this.secondCardTimeLimit);
                     /**
                      * If it is a match
                      */
                     if (this.firstValue == this.secondValue) {
-                        clearTimeout(innerScope.firstCardTimeLimit);
+                        clearTimeout(this.firstCardTimeLimit);
                         this.matchCard();
                     }
                     /**
                      * If it is not a match
                      */
                     else {
-                        clearTimeout(innerScope.firstCardTimeLimit);
+                        clearTimeout(this.firstCardTimeLimit);
                         this.misMatch();
                     }
                 }

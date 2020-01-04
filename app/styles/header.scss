@@ -142,7 +142,7 @@ img {
         overflow: hidden;
     }
     .collapse.show{
-        height: 45px;
+        min-height: 45px;
     }
   }
 }

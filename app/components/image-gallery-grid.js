@@ -10,7 +10,7 @@ export default Component.extend({
 
             { 
             "first" : { "url" : "marina-boat.JPG", "imageIndex" : 0},
-            "second" : { "url" : "hawa-mahal-with-sun.JPG", "imageIndex" : 1},
+            "second" : { "url" : "hawa-mahal-with-sun.jpg", "imageIndex" : 1},
             "third" : { "url" : "Arikkal-falls.JPG", "imageIndex" : 2},
             "fourth" : { "url" : "Athirapally-falls.jpg", "imageIndex" : 3},
             "fifth" : { "url" : "jashwand-thada.JPG", "imageIndex" : 4},
@@ -20,7 +20,7 @@ export default Component.extend({
 
             {
             "first" : { "url" : "Rameshwaram-Pamban-bridge.JPG", "imageIndex" : 7},
-            "second" : { "url" : "amber-pigeons.jpg", "imageIndex" : 8},
+            "second" : { "url" : "amber-pigeons.JPG", "imageIndex" : 8},
             "third" : { "url": "kaveri-water.JPG", "imageIndex" : 9},
             "fourth" : { "url" : "Alleppey-boat.JPG", "imageIndex" : 10},
             "fifth" : { "url" : "manali-stream.jpg", "imageIndex" : 11},
@@ -33,7 +33,7 @@ export default Component.extend({
             "second" : { "url" : "Aluva-aquaduct-bridge.jpg", "imageIndex" : 15},
             "third" : { "url" : "pitchavaram-sun.jpg", "imageIndex" : 16},
             "fourth" : { "url" : "meharang-puppet.JPG", "imageIndex" : 17},
-            "fifth" : { "url" : "jaisalmer-fort-with-blue-sky.JPG", "imageIndex" : 18},
+            "fifth" : { "url" : "jaisalmer-fort-with-blue-sky.jpg", "imageIndex" : 18},
             "sixth" : { "url" : "kanyakumari-boat.JPG", "imageIndex" : 19},
             "seventh" : { "url" : "marina-sun-1.JPG", "imageIndex" : 20}
             }
