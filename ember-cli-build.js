@@ -10,7 +10,10 @@ module.exports = function(defaults) {
       'importBootstrapCSS': true
     },
     hinting:false,
-    tests:false
+    tests:false,
+    fingerprint: {
+      enabled: false
+    }
   });
 
   // Use `app.import` to add additional libraries to the generated

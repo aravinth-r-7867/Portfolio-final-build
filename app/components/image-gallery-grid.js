@@ -50,7 +50,6 @@ export default Component.extend({
                 this.imageAll.push(obj);
             }
         });
-        console.log(this.imageAll);
     },
     didInsertElement(){
        
